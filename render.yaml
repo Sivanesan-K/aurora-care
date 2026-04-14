@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: aurora-care
+    env: python
+    buildCommand: "pip install -r requirements.txt && python manage.py migrate"
+    startCommand: "gunicorn aurora.wsgi:application"

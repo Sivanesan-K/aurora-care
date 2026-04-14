@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Book - Aurora Care</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #13131a; color: white; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px; }
+    .card { background: #1a1a24; border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; padding: 48px; width: 100%; max-width: 480px; }
+    input, textarea { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 14px 16px; color: white; font-size: 15px; margin-bottom: 16px; outline: none; }
+    input:focus, textarea:focus { border-color: #e8442a; }
+    textarea { resize: vertical; min-height: 100px; }
+    button { width: 100%; background: #e8442a; color: white; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 700; border: none; cursor: pointer; }
+    ::-webkit-calendar-picker-indicator { filter: invert(1); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <a href="javascript:history.back()" style="color:rgba(255,255,255,0.4);text-decoration:none;font-size:14px;">← Back</a>
+
+    <div style="text-align:center;margin:24px 0 32px;">
+      <div style="width:64px;height:64px;background:#e8442a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;margin:0 auto 16px;">
+        {{ person.name|first }}
+      </div>
+      <h2 style="font-size:1.4rem;font-weight:800;">Book {{ person.name }}</h2>
+      <p style="color:rgba(255,255,255,0.4);font-size:14px;margin-top:6px;">{{ type }}</p>
+    </div>
+
+    <form method="POST">
+      {% csrf_token %}
+      <label style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:6px;display:block;">Select Date</label>
+      <input type="date" name="date" required/>
+      <label style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:6px;display:block;">Message (optional)</label>
+      <textarea name="message" placeholder="Describe your concern..."></textarea>
+      <button type="submit">Confirm Booking →</button>
+    </form>
+  </div>
+</body>
+</html>

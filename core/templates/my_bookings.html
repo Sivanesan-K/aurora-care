@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>My Bookings - Aurora Care</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #13131a; color: white; }
+    .card { background: #1a1a24; border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 24px; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<nav style="background:rgba(19,19,26,0.95);border-bottom:1px solid rgba(255,255,255,0.06);padding:16px 40px;display:flex;align-items:center;justify-content:space-between;">
+  <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <div style="width:32px;height:32px;background:#e8442a;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+      <span style="color:white;font-weight:900;font-size:16px;">A</span>
+    </div>
+    <span style="font-weight:800;font-size:18px;color:white;">Aurora Care</span>
+  </a>
+  <a href="/logout/" style="color:rgba(255,255,255,0.5);font-size:14px;text-decoration:none;">Logout</a>
+</nav>
+
+<div style="max-width:700px;margin:0 auto;padding:60px 40px;">
+  <h1 style="font-size:2rem;font-weight:900;margin-bottom:8px;">My Bookings</h1>
+  <p style="color:rgba(255,255,255,0.4);margin-bottom:40px;">Hello, {{ request.user.username }} 👋</p>
+
+  {% for b in bookings %}
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        {% if b.caretaker %}
+        <p style="font-weight:700;font-size:1rem;">{{ b.caretaker.name }}</p>
+        <p style="color:rgba(255,255,255,0.4);font-size:13px;">Caregiver · {{ b.caretaker.location }}</p>
+        {% endif %}
+        {% if b.doctor %}
+        <p style="font-weight:700;font-size:1rem;">{{ b.doctor.name }}</p>
+        <p style="color:rgba(255,255,255,0.4);font-size:13px;">Doctor · {{ b.doctor.specialization }}</p>
+        {% endif %}
+        {% if b.message %}
+        <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-top:8px;">📝 {{ b.message }}</p>
+        {% endif %}
+      </div>
+      <div style="text-align:right;">
+        <p style="font-weight:700;color:#e8442a;">{{ b.date }}</p>
+        <div style="background:rgba(34,197,94,0.15);color:#22c55e;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:600;margin-top:6px;">Confirmed</div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div style="text-align:center;color:rgba(255,255,255,0.3);padding:60px 0;">
+    <div style="font-size:48px;margin-bottom:16px;">📋</div>
+    <p>No bookings yet. <a href="/caretakers/" style="color:#e8442a;text-decoration:none;">Book a caregiver</a> or <a href="/doctors/" style="color:#e8442a;text-decoration:none;">a doctor!</a></p>
+  </div>
+  {% endfor %}
+</div>
+
+</body>
+</html>

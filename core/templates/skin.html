@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skin AI - Aurora Care</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    body { background: #13131a; color: white; margin: 0; }
+    .upload-area {
+      border: 2px dashed rgba(232,68,42,0.4);
+      border-radius: 20px;
+      padding: 60px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .upload-area:hover {
+      border-color: #e8442a;
+      background: rgba(232,68,42,0.05);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav style="background:rgba(19,19,26,0.95);border-bottom:1px solid rgba(255,255,255,0.06);padding:16px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;">
+  <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <div style="width:32px;height:32px;background:#e8442a;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+      <span style="color:white;font-weight:900;font-size:16px;">A</span>
+    </div>
+    <span style="font-weight:800;font-size:18px;color:white;">Aurora Care</span>
+  </a>
+  <div style="display:flex;gap:24px;">
+    <a href="/" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;">Home</a>
+    <a href="/caretakers" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;">Caregivers</a>
+    <a href="/doctors" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;">Doctors</a>
+    <a href="/skin" style="color:#e8442a;text-decoration:none;font-size:14px;font-weight:600;">Skin AI</a>
+  </div>
+</nav>
+
+<!-- Header -->
+<div style="text-align:center;padding:60px 40px 40px;">
+  <span style="color:#e8442a;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">AI Powered</span>
+  <h1 style="font-size:2.8rem;font-weight:900;margin-top:12px;margin-bottom:12px;">
+    Skin <span style="font-family:'Caveat',cursive;color:#e8442a;font-size:3rem;">Analysis</span>
+  </h1>
+  <p style="color:rgba(255,255,255,0.45);font-size:16px;max-width:400px;margin:0 auto;">
+    Upload a photo of your skin concern and our AI will analyze it instantly.
+  </p>
+</div>
+
+<!-- Upload Form -->
+<div style="max-width:600px;margin:0 auto;padding:0 40px 80px;">
+
+  <form method="POST" enctype="multipart/form-data" action="/skin/">
+    {% csrf_token %}
+
+    <div class="upload-area" onclick="document.getElementById('imageInput').click()">
+      <div style="font-size:48px;margin-bottom:16px;">🔬</div>
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">Click to upload image</h3>
+      <p style="color:rgba(255,255,255,0.4);font-size:14px;">Supports JPG, PNG — max 5MB</p>
+      <input type="file" id="imageInput" name="image" accept="image/*" style="display:none;" onchange="showFileName(this)"/>
+    </div>
+
+    <!-- File name display -->
+    <div id="fileName" style="text-align:center;margin-top:12px;color:rgba(255,255,255,0.5);font-size:14px;"></div>
+
+    <button type="submit" style="width:100%;background:#e8442a;color:white;padding:16px;border-radius:12px;font-size:16px;font-weight:700;border:none;cursor:pointer;margin-top:24px;transition:opacity 0.2s;">
+      Analyze My Skin →
+    </button>
+
+  </form>
+
+  <!-- Result Section -->
+  {% if result %}
+  <div style="margin-top:40px;background:#1a1a24;border:1px solid rgba(232,68,42,0.3);border-radius:20px;padding:32px;text-align:center;">
+    <div style="font-size:48px;margin-bottom:16px;">📋</div>
+    <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:12px;color:#e8442a;">Analysis Result</h3>
+    <p style="color:rgba(255,255,255,0.8);font-size:16px;line-height:1.7;">{{ result }}</p>
+  </div>
+  {% endif %}
+
+</div>
+
+<script>
+  function showFileName(input) {
+    if (input.files && input.files[0]) {
+      document.getElementById('fileName').textContent = '📎 ' + input.files[0].name;
+    }
+  }
+</script>
+
+</body>
+</html>
